@@ -20,7 +20,7 @@ export const routes = createBrowserRouter([
             {
                 path:'/',
                 element:<Home></Home>,
-                loader:()=>fetch('http://localhost:5000/course')
+                loader:()=>fetch('https://pilearning.vercel.app/course')
             },
             
 
@@ -34,14 +34,14 @@ export const routes = createBrowserRouter([
             {
                 path:'/courses',
                 element:<Courses></Courses>,
-                loader:()=>fetch('http://localhost:5000/course')
+                loader:()=>fetch('https://pilearning.vercel.app/course')
             
             },
 
             {
                 path:'/courses/:id',
                 element:<CourseDetail></CourseDetail>,
-                loader:({params})=>fetch(`http://localhost:5000/category/${params.id}`)
+                loader:({params})=>fetch(`https://pilearning.vercel.app/${params.id}`)
 
 
             },
@@ -49,7 +49,7 @@ export const routes = createBrowserRouter([
             {
                 path:'/course/:id',
                 element:<AllCourseDetail></AllCourseDetail>,
-                loader:({params})=>fetch(`http://localhost:5000/course/${params.id}`)
+                loader:({params})=>fetch(`https://pilearning.vercel.app/${params.id}`)
             },
             
             {
@@ -70,7 +70,7 @@ export const routes = createBrowserRouter([
             {
                 path:'/checkout/:id',
                 element: <PrivateRoute><CheckOut/></PrivateRoute>,
-                loader: ({params}) => fetch(`http://localhost:5000/course/${params.id}`)
+                loader: ({params}) => fetch(`https://pilearning.vercel.app/${params.id}`)
             },
             {
                 path: '/checkout',

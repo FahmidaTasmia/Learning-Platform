@@ -1,7 +1,19 @@
+import { GoogleAuthProvider } from 'firebase/auth';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useContext } from 'react';
+import { useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../../../contexts/AuthProvider/AuthProvider';
+import { FaGoogle } from "react-icons/fa";
 
 const Login = () => {
+    const [error, setError]=useState(' ');
+    const{signIn, setLoading}=useContext(AuthContext);
+    const {providerLogin}=useContext(AuthContext);
+    const googleProvider = new GoogleAuthProvider();
+    const navigate = useNavigate();
+    const location =useLocation();
+    const from = location.state?.from?.pathname || '/';
 
     const handleSubmit = event =>{
         event.preventDefault();
@@ -9,7 +21,38 @@ const Login = () => {
         const email = form.email.value;
         const password = form.password.value;
         console.log(email,password);
+
+        signIn(email, password)
+            .then(result => {
+                const user = result.user;
+                console.log(user);
+                form.reset();
+                setError('');
+                if(user.emailVerified){
+                    navigate(from, {replace: true});
+                }
+                else{
+                    alert('Your email is not verified. Please verify your email address.')
+                }
+            })
+            .catch(error => {
+                console.error(error)
+                setError(error.message);
+            })
+            .finally(() => {
+                setLoading(false);
+            })
     }
+
+    const handleGoogleSignIn=()=>{
+      providerLogin(googleProvider)
+      .then(result=>{
+          const user = result.user;
+          console.log(user);
+      })
+      .catch(error=>console.error(error));
+
+  }
 
     return (
      
@@ -23,7 +66,7 @@ const Login = () => {
                         <div>
                             <h1 className="text-2xl font-semibold">Login Form with Floating Labels</h1>
                         </div>
-        <form onSubmit={handleSubmit} className="mt-8 space-y-6">
+                        <form onSubmit={handleSubmit} className="mt-8 space-y-6">
           <div className="rounded-md shadow-sm -space-y-px">
             <div>
               <input
@@ -55,6 +98,9 @@ const Login = () => {
             >
               Login
             </button>
+            <div>
+              {error}
+            </div>
           </div>
           <div className="flex items-center justify-between">
             <div className="text-sm">
@@ -62,11 +108,14 @@ const Login = () => {
                 to="/register"
                 className="text-blue-600 hover:underline dark:text-blue-500"
               >
-                Don't have an account? <span className='font-semibold'>Register</span>
+                Don't have an account? <span c>Register</span>
               </Link>
             </div>
           </div>
         </form>
+        <div >
+            <button onClick={handleGoogleSignIn} className="mt-5 w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-cyan-500 to-blue-500"><FaGoogle className='mr-2'></FaGoogle>SignIn with Google</button>
+            </div>
                     </div>
                 </div>
             </div>

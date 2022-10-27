@@ -1,11 +1,13 @@
 import React from 'react';
-import { useLoaderData } from 'react-router-dom';
+import LeftsideNav from '../LeftSideNav/LeftsideNav';
+
+
 
 const Courses = () => {
-    const courses = useLoaderData() ;
+   
     return (
         <div>
-           <h2>this is total course :{courses.length}</h2> 
+    <LeftsideNav></LeftsideNav>
         </div>
     );
 };

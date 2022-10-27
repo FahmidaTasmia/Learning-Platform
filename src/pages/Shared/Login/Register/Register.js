@@ -1,8 +1,37 @@
 import React from 'react';
+import { useContext } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../../../contexts/AuthProvider/AuthProvider';
 
 
 const Register = () => {
+
+  const{createUser}=useContext(AuthContext);
+  const[error,setError]=useState(' ');
+
+  const handleSubmit=(event)=>{
+    event.preventDefault();
+    const form= event.target;
+    const name =form.name.value;
+    const email = form.email.value;
+    const password= form.password.value;
+    
+    console.log(name,email,password);
+    createUser(email,password)
+    .then(result=>{
+        const user = result.user;
+        console.log(user);
+        setError(' ');
+        form.reset();
+    })
+    .catch(error=>{
+      console.error(error)
+      setError(error.message);
+    });
+}
+
+ 
   
     return (
        
@@ -16,11 +45,11 @@ const Register = () => {
                     <div>
                         <h1 className="text-2xl font-semibold">Login Form with Floating Labels</h1>
                     </div>
-    <form  className="mt-8 space-y-6">
+    <form onSubmit={handleSubmit}  className="mt-8 space-y-6">
       <div className="rounded-md shadow-sm -space-y-px">
       <div>
           <input
-            id="full-name"
+            id="name"
             name="name"
             type="text"
             autoComplete="name"
@@ -35,14 +64,14 @@ const Register = () => {
             name="photoURL"
             type="text"
            
-            required
+          
             className="mb-5 appearance-none rounded-none relative block w-full px-3 py-2 placeholder-gray-500 rounded-t-md bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 focus:z-10 sm:text-sm"
             placeholder="photo URL"
           />
         </div>
         <div>
           <input
-            id="email-address"
+            id="email"
             name="email"
             type="email"
             autoComplete="email"
@@ -70,6 +99,9 @@ const Register = () => {
         >
          Register
         </button>
+        <div>
+              {error}
+            </div>
       </div>
       <div className="flex items-center justify-between">
         <div className="text-sm">

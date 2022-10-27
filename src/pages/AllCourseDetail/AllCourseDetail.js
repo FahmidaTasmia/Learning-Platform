@@ -11,10 +11,10 @@ const AllCourseDetail = ({course}) => {
           <div className="card card-compact w-96 bg-base-100 shadow-xl">
               <figure><img src={image_url} alt="Shoes" /></figure>
               <div className="card-body">
-                <h2 className="card-title">{title}</h2>
-                <p>{skill}</p>
+                <h2 className="card-title ont-bold text-lg text-blue-600 uppercase">{title}</h2>
+                <p><span className='font-bold  text-blue-600'> Skill You Can Gain:</span> {skill}</p>
                 <div className="card-actions justify-end">
-                <Link className='border p-6 hover:font-semibold mb-3 mx-3 rounded' to={`/courses/${category_id}`}>Buy Now</Link>
+                <Link className='btn w-full btn-sm btn-primary  hover:font-semibold mb-3 rounded' to={`/courses/${category_id}`}>Buy Now</Link>
                 </div>
               </div>
           </div>

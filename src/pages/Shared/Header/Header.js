@@ -1,7 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-
+import { AuthContext } from '../../../contexts/AuthProvider/AuthProvider';
+import {  FaUser } from "react-icons/fa";
 const Header = () => {
+    const{user,logOut}= useContext(AuthContext);
+
+    const handleLogOut=()=>{
+        logOut()
+        .then(()=>{ })
+        .catch(error=>console.error(error));
+    }
     return (
             <div className="navbar bg-gradient-to-r shadow-lg ">
             <div className="navbar-start">
@@ -28,14 +36,45 @@ const Header = () => {
                 <Link className='mr-3' to='/courses'>Courses</Link>
                 <Link className='mr-3' to='/blog'>Blog</Link>
                 <Link className='mr-3' to='/faq'>FAQ</Link>
-                <Link className='mr-3' to='/checkout'>Checkout</Link>
+
+                <div>
+                    {
+                        user?.uid?
+                        <>
+                        <span className='mr-3'>{user?.displayName}</span>
+                        <button onClick={handleLogOut} className="btn btn-sm">Log out</button>
+                        </>
+                        :
+                        <>
+                        <Link className='mr-3' to='/login'>Login</Link>
+                         <Link to='/register'>Register</Link>
+                        </>
+                    }
+                    </div>
+
+                    <div>
+
+                       {
+                        user?.photoURL ?
+                        <img className='h-10 rounded-full' src={user.photoURL} alt="" />
+                        :
+                        <FaUser></FaUser>
+                       } 
+                    </div>
                 
                 </div>
             </div>
             <div  className="navbar-end">
                 <Link to='/login'><button className="btn border-none  md:btn-sm btn-xs mr-5 ">Get started</button></Link>
+                <div className="form-control">
+  <label className="label cursor-pointer">
+   
+    <input type="checkbox" className="toggle toggle-primary" checked />
+  </label>
+</div>
                 
             </div>
+
             </div>
     );
 };

@@ -11,8 +11,8 @@ const LeftsideNav = () => {
         .then(data=>setCategories(data))
     })
     return (
-        <div className='h-screen bg-gradient-to-r from-cyan-500 to-blue-500 text-white  w-56 my-12  shadow-lg'>
-            <h4>All Courses: {categories.length}</h4>
+        <div className='h-screen bg-gradient-to-r from-cyan-500 to-blue-500 text-white  w-64 my-12  shadow-lg'>
+            <h4 className='font-bold font-serif my-3 p-3'>Select your suitable Course </h4>
             <div className=' '>
                 {
                     categories.map(category=> <div className='grid ' 

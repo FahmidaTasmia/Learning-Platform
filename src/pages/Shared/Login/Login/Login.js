@@ -8,12 +8,12 @@ import { FaGoogle } from "react-icons/fa";
 
 const Login = () => {
     const [error, setError]=useState(' ');
-    const{signIn, setLoading}=useContext(AuthContext);
+    const{signIn}=useContext(AuthContext);
     const {providerLogin}=useContext(AuthContext);
     const googleProvider = new GoogleAuthProvider();
     const navigate = useNavigate();
     const location =useLocation();
-    const from = location.state?.from?.pathname || '/';
+    const from = location.state?.from?.pathname || '/courses';
 
     const handleSubmit = event =>{
         event.preventDefault();
@@ -28,20 +28,13 @@ const Login = () => {
                 console.log(user);
                 form.reset();
                 setError('');
-                if(user.emailVerified){
-                    navigate(from, {replace: true});
-                }
-                else{
-                    alert('Your email is not verified. Please verify your email address.')
-                }
+                navigate(from, {replace:true});
             })
             .catch(error => {
                 console.error(error)
                 setError(error.message);
             })
-            .finally(() => {
-                setLoading(false);
-            })
+           
     }
 
     const handleGoogleSignIn=()=>{

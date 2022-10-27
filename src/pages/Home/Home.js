@@ -9,14 +9,16 @@ const Home = () => {
     return (
         <div>
            <Hero></Hero>
-           <div>
-            <h2>courses :{courses.length}</h2>
+           <div className='md:my-24'>
+           <div className='grid md:grid-cols-3 container m-auto md:gap-12 gap-5'>
+            
             {
-                courses.map(course=> <AllCourseDetail key={course._id}>
-                  course =  {course}
+                courses.map(course=> <AllCourseDetail key={course._id}  course =  {course}>
+                 
 
                 </AllCourseDetail>)
             }
+           </div>
            </div>
           
         </div>
